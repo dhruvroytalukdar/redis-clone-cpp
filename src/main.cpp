@@ -51,11 +51,15 @@ int main(int argc, char **argv) {
   std::cout << "Logs from your program will appear here!\n";
 
   // Uncomment the code below to pass the first stage
-  int client_fd = accept(server_fd, (struct sockaddr*)&client_addr, (socklen_t*)&client_addr_len);
-  const char *response = "+PONG\r\n";
-  send(client_fd, response, strlen(response), 0);
-
-  std::cout << "Client connected\n";
+  char buffer[1024];
+  while (true) {
+      int bytes_received = recv(client_fd, buffer, sizeof(buffer), 0);
+      if (bytes_received <= 0) {
+          break;
+      }
+      const char *response = "+PONG\r\n";
+      send(client_fd, response, strlen(response), 0);
+  }
   
   close(server_fd);
 
