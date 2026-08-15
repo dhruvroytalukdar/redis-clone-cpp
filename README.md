@@ -1,33 +1,23 @@
-[![progress-banner](https://backend.codecrafters.io/progress/redis/3ac23919-f4b1-4db0-bb01-a47b1869f72d)](https://app.codecrafters.io/users/dhruvroytalukdar?r=2qF)
+# Redis clone (C++)
 
-This is a starting point for C++ solutions to the
-["Build Your Own Redis" Challenge](https://codecrafters.io/challenges/redis).
+A Redis-compatible server built in C++.
 
-In this challenge, you'll build a toy Redis clone that's capable of handling
-basic commands like `PING`, `SET` and `GET`. Along the way we'll learn about
-event loops, the Redis protocol and more.
+For the feature-by-feature implementation plan and the concepts behind it, see
+[the build walkthrough](docs/BUILD_GUIDE.md).
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+## Build
 
-# Passing the first stage
-
-The entry point for your Redis implementation is in `src/main.cpp`. Study and
-uncomment the relevant code, then run the command below to execute the tests on
-our servers:
+Requirements: CMake 3.20+ and a C++23-capable compiler.
 
 ```sh
-codecrafters submit
+cmake -S . -B build
+cmake --build build
 ```
 
-That's all!
+## Run
 
-# Stage 2 & beyond
+```sh
+./build/redis
+```
 
-Note: This section is for stages 2 and beyond.
-
-1. Ensure you have `cmake` installed locally
-1. Run `./your_program.sh` to run your Redis server, which is implemented in
-   `src/main.cpp`.
-1. Run `codecrafters submit` to submit your solution to CodeCrafters. Test
-   output will be streamed to your terminal.
+The server entry point is [src/main.cpp](src/main.cpp).
