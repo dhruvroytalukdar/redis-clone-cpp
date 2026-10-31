@@ -1,11 +1,9 @@
+#include "config.h"
 #include "socket.h"
 #include "utils.h"
 
-#include <charconv>
-#include <cstdint>
+#include <cstddef>
 #include <iostream>
-#include <optional>
-#include <string_view>
 
 #ifdef _WIN32
 #include <ws2tcpip.h>
@@ -13,37 +11,10 @@
 #include <arpa/inet.h>
 #endif
 
-namespace {
-
-std::optional<std::uint16_t> parse_port(int argc, char* argv[]) {
-  if (argc == 1) {
-    return 6379;
-  }
-
-  if (argc != 3 || std::string_view(argv[1]) != "--port") {
-    std::cerr << "Usage: redis [--port <1-65535>]\n";
-    return std::nullopt;
-  }
-
-  int port = 0;
-  const std::string_view argument = argv[2];
-  const auto [end, error] = std::from_chars(
-      argument.data(), argument.data() + argument.size(), port);
-
-  if (error != std::errc{} || end != argument.data() + argument.size() ||
-      port < 1 || port > 65535) {
-    std::cerr << "Invalid port: " << argument << "\n";
-    return std::nullopt;
-  }
-
-  return static_cast<std::uint16_t>(port);
-}
-
-}  // namespace
-
 int main(int argc, char* argv[]) {
-  const auto port = parse_port(argc, argv);
+  const auto port = parse_port({argv, static_cast<std::size_t>(argc)});
   if (!port) {
+    std::cerr << port.error() << "\n";
     return 1;
   }
 
