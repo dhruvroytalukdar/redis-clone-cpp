@@ -2,7 +2,5 @@
 
 #include "socket.h"
 
-#include <string_view>
-
-bool send_all(Socket socket, std::string_view response);
+// Takes ownership of the connection; it is closed when this returns.
 void handle_client(Socket client_socket);

@@ -53,6 +53,7 @@ if(REDIS_BUILD_TESTS)
   add_executable(unit_tests
     tests/unit/test_main.cpp
     tests/unit/config_test.cpp
+    tests/unit/socket_test.cpp
   )
   target_link_libraries(unit_tests PRIVATE redis_core doctest::doctest)
   add_test(NAME unit_tests COMMAND unit_tests)
